@@ -1,0 +1,5 @@
+.node/
+/nohup.out
+/xenminer-p2p
+
+.idea/
