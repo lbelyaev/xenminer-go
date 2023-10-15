@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
+	"flag"
 	"fmt"
 	"golang.org/x/crypto/argon2"
 	"log"
@@ -69,6 +70,9 @@ func generateRandomSHA256(maxLength int) string {
 }
 
 func main() {
+
+	threads := flag.Uint64("threads", uint64(runtime.NumCPU()), "no of threads")
+
 	p := &params{
 		memory:      64 * 1024,
 		iterations:  1,
@@ -100,11 +104,11 @@ func main() {
 		}
 	}
 
-	numCpu := runtime.NumCPU()
-
+	log.Printf("Using %d threads\n", *threads)
 	var wg sync.WaitGroup
+	var i uint64
 
-	for i := 0; i < numCpu; i++ {
+	for i = 0; i < *threads; i++ {
 		go mine()
 		wg.Add(1)
 	}
