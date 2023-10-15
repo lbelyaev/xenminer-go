@@ -72,6 +72,7 @@ func generateRandomSHA256(maxLength int) string {
 func main() {
 
 	threads := flag.Uint64("threads", uint64(runtime.NumCPU()), "no of threads")
+	flag.Parse()
 
 	p := &params{
 		memory:      64 * 1024,
